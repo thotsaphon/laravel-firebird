@@ -1,10 +1,10 @@
-# laravel-firebird
+# laravel-firebird เขียนเองใช้เอง
 
 To use this package:
 
 **For Firebird 3.0 or above**
 
-สร้าง Generator / Sequence สำหรับ Primary key เอาเองเด้อ เพราะ Auto increment ของ Firebird มันรันข้ามกันไม่ได้เหมือน MySQL จึงไม่อยากสร้าง Identity ผูกกับ Primary Key
+สร้าง Generator / Sequence สำหรับ Primary key เอาเอง เพราะ Auto increment ของ Firebird มันรันข้ามกันไม่ได้เหมือน MySQL จึงไม่อยากสร้าง Identity ผูกกับ Primary Key
 
 Installation
 ------------
