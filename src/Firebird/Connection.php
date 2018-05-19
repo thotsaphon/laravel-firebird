@@ -1,6 +1,5 @@
 <?php namespace Firebird;
 
-use PDO;
 use Firebird\Schema\Grammars\FirebirdGrammar as SchemaGrammar;
 
 class Connection extends \Illuminate\Database\Connection {
@@ -153,4 +152,34 @@ class Connection extends \Illuminate\Database\Connection {
 
     return $query->from($table);
   }
+
+    /**
+     * Execute an SQL statement and return the boolean result.
+     *
+     * @param  string  $query
+     * @param  array   $bindings
+     * @return bool
+     */
+    public function statement($query, $bindings = [])
+    {
+        return $this->run($query, $bindings, function ($query, $bindings) {
+            if ($this->pretending()) {
+                return true;
+            }
+
+            $statement = $this->getPdo()->prepare($query);
+
+            $this->bindValues($statement, $this->prepareBindings($bindings));
+
+            $executed = $statement->execute();
+
+            if ($executed && $this->getPdo() instanceof PDO){
+                $fetched = $statement->fetch(PDO::FETCH_ASSOC);
+                if (is_array($fetched))
+                    $this->getPdo()->mergeDictionary($fetched);
+            }
+
+            return $executed;
+        });
+    }
 }

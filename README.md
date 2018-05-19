@@ -2,27 +2,20 @@
 
 To use this package:
 
+**For Firebird 3.0 or above**
+
+สร้าง Generator / Sequence สำหรับ Primary key เอาเองเด้อ เพราะ Auto increment ของ Firebird มันรันข้ามกันไม่ได้เหมือน MySQL จึงไม่อยากสร้าง Identity ผูกกับ Primary Key
+
 Installation
 ------------
 
 Install the Firebird PDO driver for PHP.
 
-Mariuz's Blog has a very good step by step on this:
-http://mapopa.blogspot.com/2009/04/php5-and-firebird-pdo-on-ubuntu-hardy.html
 
 Install using composer:
 ```json
-composer require jacquestvanzuydam/laravel-firebird
+composer require thotsaphon/laravel-firebird
 ```
-
-**For Laravel 5.1.* support, please look at the [5.1-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.1-support) branch.**
-
-**For Laravel 5.2.* support, please look at the [5.2-sup](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.2-sup) branch.**
-
-**For Laravel 5.3.* support, please look at the [5.3-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.3-support) branch.**
-
-**For Laravel 5.4.* support, please look at the [5.4-support](https://github.com/jacquestvanzuydam/laravel-firebird/tree/5.4-support) branch.**
-
 
 Update the `app/config/app.php`, add the service provider:
 ```json
@@ -42,17 +35,6 @@ Other keys that are needed:
     'username' => env('DB_USERNAME', 'sysdba'),
     'password' => env('DB_PASSWORD', 'masterkey'),
     'charset'  => env('DB_CHARSET', 'UTF8'),
+    'collation'  => env('DB_COLLATION', 'UTF8'),
 ],
 ```
-
-And add to your .env
-```
-DB_CHARSET=UTF8
-```
-
-If necessary, change the UTF8 to any other charset
-
-This package is still in it's infancy and I wouldn't yet recommend using
-it for large projects, or without backing up your database regularly.
-
-Any comments or contributions are welcome.

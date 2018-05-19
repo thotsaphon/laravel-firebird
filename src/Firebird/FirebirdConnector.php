@@ -31,4 +31,21 @@ class FirebirdConnector extends Connector implements ConnectorInterface {
     return $this->createConnection("firebird:dbname={$host}:{$path};charset={$charset}", $config, $options);
   }
 
+    /**
+     * Create a new PDO connection instance.
+     *
+     * @param  string  $dsn
+     * @param  string  $username
+     * @param  string  $password
+     * @param  array  $options
+     * @return \PDO
+     */
+    protected function createPdoConnection($dsn, $username, $password, $options)
+    {
+        if (class_exists(PDOConnection::class) && ! $this->isPersistentConnection($options)) {
+            return new PDOConnection($dsn, $username, $password, $options);
+        }
+
+        return new PDO($dsn, $username, $password, $options);
+    }
 }

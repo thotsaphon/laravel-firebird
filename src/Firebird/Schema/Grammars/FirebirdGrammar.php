@@ -19,7 +19,7 @@ class FirebirdGrammar extends Grammar {
    *
    * @var array
    */
-  protected $serials = array('integer');
+    protected $serials = ['bigInteger', 'integer', 'mediumInteger', 'smallInteger', 'tinyInteger'];
 
   /**
    * Compile the query to determine if a table exists.
@@ -212,7 +212,7 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeChar(Fluent $column)
   {
-    return 'VARCHAR';
+      return 'CHAR ('.$column->length.')';
   }
 
   /**
@@ -278,7 +278,7 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeBigInteger(Fluent $column)
   {
-    return 'INTEGER';
+    return 'BIGINT';
   }
 
   /**
@@ -355,7 +355,7 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeBoolean(Fluent $column)
   {
-    return 'CHAR(1)';
+    return 'BOOLEAN';
   }
 
   /**
@@ -388,7 +388,10 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeDate(Fluent $column)
   {
-    return 'TIMESTAMP';
+      if ($column->useCurrent) {
+          return 'DATETIME DEFAULT CURRENT_DATE';
+      }
+      return 'DATE';
   }
 
   /**
@@ -399,7 +402,10 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeDateTime(Fluent $column)
   {
-    return 'TIMESTAMP';
+      if ($column->useCurrent) {
+          return 'DATETIME DEFAULT CURRENT_DATETIME';
+      }
+      return 'DATETIME';
   }
 
   /**
@@ -410,7 +416,10 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeTime(Fluent $column)
   {
-    return 'TIMESTAMP';
+      if ($column->useCurrent) {
+          return 'TIME DEFAULT CURRENT_TIME';
+      }
+      return 'TIME';
   }
 
   /**
@@ -421,7 +430,10 @@ class FirebirdGrammar extends Grammar {
    */
   protected function typeTimestamp(Fluent $column)
   {
-    return 'TIMESTAMP';
+      if ($column->useCurrent) {
+          return 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP';
+      }
+      return 'TIMESTAMP';
   }
 
   /**
@@ -434,4 +446,63 @@ class FirebirdGrammar extends Grammar {
   {
     return 'BLOB SUB_TYPE 0';
   }
+
+    // Edited By Thotsaphon Chaiyachet
+    /**
+     * Create the column definition for a time type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeTimeTz(Fluent $column)
+    {
+        if ($column->useCurrent) {
+            return 'TIME DEFAULT CURRENT_TIME';
+        }
+        return 'TIME';
+    }
+
+    /**
+     * Create the column definition for a timestamp type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeTimestampTz(Fluent $column)
+    {
+        return $this->typeTimestamp($column);
+    }
+
+    /**
+     * Create the column definition for a uuid type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeUuid(Fluent $column)
+    {
+        return 'CHAR(36)';
+    }
+
+    /**
+     * Create the column definition for an IP address type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeIpAddress(Fluent $column)
+    {
+        return 'VARCHAR(45)';
+    }
+
+    /**
+     * Create the column definition for a MAC address type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeMacAddress(Fluent $column)
+    {
+        return 'VARCHAR(17)';
+    }
 }

@@ -1,12 +1,12 @@
 {
-    "name": "jacquestvanzuydam/laravel-firebird",
+    "name": "thotsaphon/laravel-firebird",
     "description": "A Firebird database package for the Laravel Framework",
     "license": "MIT",
     "version": "1.0.0.0",
     "authors": [
         {
-            "name": "Jacques van Zuydam",
-            "email": "jtvanzuydam@gmail.com"
+            "name": "Thotsaphon Chaiyachet",
+            "email": "thotsaphon34@gmail.com"
         }
     ],
     "minimum-stability": "dev",
